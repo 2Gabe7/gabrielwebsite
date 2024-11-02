@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+    <title>Connect 4 :: Gabriel Bryer</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="My attempt at making Connect 4 in python" />
+<meta name="keywords" content="" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="http://localhost:1313/posts/connect4/" />
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="http://localhost:1313/styles.css">
+
+
+
+
+
+
+
+  <link rel="shortcut icon" href="http://localhost:1313/img/theme-colors/blue.png">
+  <link rel="apple-touch-icon" href="http://localhost:1313/img/theme-colors/blue.png">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Connect 4">
+<meta property="og:description" content="My attempt at making Connect 4 in python" />
+<meta property="og:url" content="http://localhost:1313/posts/connect4/" />
+<meta property="og:site_name" content="Gabriel Bryer" />
+
+  
+  
+  <meta property="og:image" content="http://localhost:1313/">
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+
+
+  <meta property="article:published_time" content="2023-03-10 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+</head>
+<body class="blue">
+
+
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    Gabriel Bryer
+  </div>
+</a>
+
+    </div>
+    
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/about">About Me</a></li>
+        
+      
+      
+    </ul>
+  </li>
+</ul>
+
+    
+    
+  </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+      
+        
+          <li><a href="/about" >About Me</a></li>
+        
+      
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://localhost:1313/posts/connect4/">Connect 4</a>
+  </h1>
+  <div class="post-meta"><time class="post-date">2023-03-10</time><span class="post-author">Gabriel</span>
+    
+</div>
+
+  
+  
+
+
+
+  
+
+  <div class="post-content"><div>
+        <p>When making Connect 4; I used what I learned from Tic Tac Toe to check for the win, although the math was a little confusing because of the way I set the board up at the start, and I was too far in to switch it. (You can see it in the diagnol check wins) It was a fun challenge to figure out how each piece is dropped in, and test outcomes till I was confident it all worked.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>clear <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span>: os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#39;clear&#39;</span>)
+</span></span><span style="display:flex;"><span>clear()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Make the board using [x][y]</span>
+</span></span><span style="display:flex;"><span>row6 <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>]
+</span></span><span style="display:flex;"><span>row5 <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>]
+</span></span><span style="display:flex;"><span>row4 <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>]
+</span></span><span style="display:flex;"><span>row3 <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>]
+</span></span><span style="display:flex;"><span>row2 <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>]
+</span></span><span style="display:flex;"><span>row1 <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>,<span style="color:#e6db74">&#34;  &#34;</span>]
+</span></span><span style="display:flex;"><span>row <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;0&#34;</span>,row1,row2,row3,row4,row5,row6]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Function to print the connect four board</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">c4_board</span>():
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;            Connect Four         &#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;- 1  - 2  - 3  - 4  - 5  - 6  - 7  -&#34;</span>,)   
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;+----+----+----+----+----+----+----+&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">6</span>][<span style="color:#ae81ff">0</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">6</span>][<span style="color:#ae81ff">1</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">6</span>][<span style="color:#ae81ff">2</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">6</span>][<span style="color:#ae81ff">3</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">6</span>][<span style="color:#ae81ff">4</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">6</span>][<span style="color:#ae81ff">5</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">6</span>][<span style="color:#ae81ff">6</span>],<span style="color:#e6db74">&#34;|&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;+----+----+----+----+----+----+----+&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">5</span>][<span style="color:#ae81ff">0</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">5</span>][<span style="color:#ae81ff">1</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">5</span>][<span style="color:#ae81ff">2</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">5</span>][<span style="color:#ae81ff">3</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">5</span>][<span style="color:#ae81ff">4</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">5</span>][<span style="color:#ae81ff">5</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">5</span>][<span style="color:#ae81ff">6</span>],<span style="color:#e6db74">&#34;|&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;+----+----+----+----+----+----+----+&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">4</span>][<span style="color:#ae81ff">0</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">4</span>][<span style="color:#ae81ff">1</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">4</span>][<span style="color:#ae81ff">2</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">4</span>][<span style="color:#ae81ff">3</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">4</span>][<span style="color:#ae81ff">4</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">4</span>][<span style="color:#ae81ff">5</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">4</span>][<span style="color:#ae81ff">6</span>],<span style="color:#e6db74">&#34;|&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;+----+----+----+----+----+----+----+&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">3</span>][<span style="color:#ae81ff">0</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">3</span>][<span style="color:#ae81ff">1</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">3</span>][<span style="color:#ae81ff">2</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">3</span>][<span style="color:#ae81ff">3</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">3</span>][<span style="color:#ae81ff">4</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">3</span>][<span style="color:#ae81ff">5</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">3</span>][<span style="color:#ae81ff">6</span>],<span style="color:#e6db74">&#34;|&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;+----+----+----+----+----+----+----+&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">2</span>][<span style="color:#ae81ff">0</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">2</span>][<span style="color:#ae81ff">1</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">2</span>][<span style="color:#ae81ff">2</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">2</span>][<span style="color:#ae81ff">3</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">2</span>][<span style="color:#ae81ff">4</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">2</span>][<span style="color:#ae81ff">5</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">2</span>][<span style="color:#ae81ff">6</span>],<span style="color:#e6db74">&#34;|&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;+----+----+----+----+----+----+----+&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">0</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">1</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">2</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">3</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">4</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">5</span>],<span style="color:#e6db74">&#34;|&#34;</span>,row[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">6</span>],<span style="color:#e6db74">&#34;|&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;+----+----+----+----+----+----+----+&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Function to check for a win</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">check_win</span>(player):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">global</span> win
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Check Horizontal</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">6</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">5</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> row[j][i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> player <span style="color:#f92672">and</span> row[j][i<span style="color:#f92672">+</span><span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> player <span style="color:#f92672">and</span> row[j][i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> player <span style="color:#f92672">and</span> row[j][i<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> player:
+</span></span><span style="display:flex;"><span>                clear()
+</span></span><span style="display:flex;"><span>                print(player,<span style="color:#e6db74">&#34;wins!&#34;</span>)
+</span></span><span style="display:flex;"><span>                win <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Check Vertical</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">7</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">4</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> row[i][j] <span style="color:#f92672">==</span> player <span style="color:#f92672">and</span> row[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>][j] <span style="color:#f92672">==</span> player <span style="color:#f92672">and</span> row[i<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>][j] <span style="color:#f92672">==</span> player <span style="color:#f92672">and</span> row[i<span style="color:#f92672">+</span><span style="color:#ae81ff">3</span>][j] <span style="color:#f92672">==</span> player:
+</span></span><span style="display:flex;"><span>                clear()
+</span></span><span style="display:flex;"><span>                print(player,<span style="color:#e6db74">&#34;wins!&#34;</span>)
+</span></span><span style="display:flex;"><span>                win <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Check diagnal up</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">4</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> row[j<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>][i<span style="color:#f92672">+</span><span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> player <span style="color:#f92672">and</span> row[j<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>][i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> player <span style="color:#f92672">and</span> row[j<span style="color:#f92672">+</span><span style="color:#ae81ff">3</span>][i<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> player <span style="color:#f92672">and</span> row[j<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>][i<span style="color:#f92672">+</span><span style="color:#ae81ff">3</span>] <span style="color:#f92672">==</span> player:
+</span></span><span style="display:flex;"><span>                clear()
+</span></span><span style="display:flex;"><span>                print(player,<span style="color:#e6db74">&#34;wins!&#34;</span>)
+</span></span><span style="display:flex;"><span>                win <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Check diagnal down</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">4</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> row[j<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>][i<span style="color:#f92672">+</span><span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> player <span style="color:#f92672">and</span> row[j<span style="color:#f92672">+</span><span style="color:#ae81ff">3</span>][i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> player <span style="color:#f92672">and</span> row[j<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>][i<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> player <span style="color:#f92672">and</span> row[j<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>][i<span style="color:#f92672">+</span><span style="color:#ae81ff">3</span>] <span style="color:#f92672">==</span> player:
+</span></span><span style="display:flex;"><span>                clear()
+</span></span><span style="display:flex;"><span>                win <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Function to go through each player&#39;s turn</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">player_turn</span>(player):
+</span></span><span style="display:flex;"><span>    turn <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> turn <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        turn <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Player&#39;s Input</span>
+</span></span><span style="display:flex;"><span>        c4_board()
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;It is &#34;</span><span style="color:#f92672">+</span>player<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;&#39;s turn&#34;</span>)
+</span></span><span style="display:flex;"><span>        move <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#34;Where would you like to play?: &#34;</span>)
+</span></span><span style="display:flex;"><span>        clear()
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># CHeck if valid move</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> move <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#f92672">or</span> move <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#f92672">or</span> move <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;3&#34;</span> <span style="color:#f92672">or</span> move <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;4&#34;</span> <span style="color:#f92672">or</span> move <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;5&#34;</span> <span style="color:#f92672">or</span> move <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;6&#34;</span> <span style="color:#f92672">or</span> move <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;7&#34;</span>:
+</span></span><span style="display:flex;"><span>            move <span style="color:#f92672">=</span> int(move)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Put players piece where they moved</span>
+</span></span><span style="display:flex;"><span>            move <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">7</span>):
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> move <span style="color:#f92672">==</span> i:
+</span></span><span style="display:flex;"><span>                    print(<span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> row[<span style="color:#ae81ff">1</span>][i] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;  &#34;</span>:
+</span></span><span style="display:flex;"><span>                        row[<span style="color:#ae81ff">1</span>][i] <span style="color:#f92672">=</span> player
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">elif</span> row[<span style="color:#ae81ff">2</span>][i] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;  &#34;</span>:
+</span></span><span style="display:flex;"><span>                        row[<span style="color:#ae81ff">2</span>][i] <span style="color:#f92672">=</span> player
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">elif</span> row[<span style="color:#ae81ff">3</span>][i] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;  &#34;</span>:
+</span></span><span style="display:flex;"><span>                        row[<span style="color:#ae81ff">3</span>][i] <span style="color:#f92672">=</span> player 
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">elif</span> row[<span style="color:#ae81ff">4</span>][i] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;  &#34;</span>:
+</span></span><span style="display:flex;"><span>                        row[<span style="color:#ae81ff">4</span>][i] <span style="color:#f92672">=</span> player
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">elif</span> row[<span style="color:#ae81ff">5</span>][i] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;  &#34;</span>:
+</span></span><span style="display:flex;"><span>                        row[<span style="color:#ae81ff">5</span>][i] <span style="color:#f92672">=</span> player
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">elif</span> row[<span style="color:#ae81ff">6</span>][i] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;  &#34;</span>:
+</span></span><span style="display:flex;"><span>                        row[<span style="color:#ae81ff">6</span>][i] <span style="color:#f92672">=</span> player
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                        clear()
+</span></span><span style="display:flex;"><span>                        print(<span style="color:#e6db74">&#34;Invalid move, Try again.&#34;</span>)
+</span></span><span style="display:flex;"><span>                        turn <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">&#34;Invalid move, Try again.&#34;</span>)
+</span></span><span style="display:flex;"><span>            turn <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    check_win(player)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Game play steps</span>
+</span></span><span style="display:flex;"><span>win <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> win <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>    player_turn(<span style="color:#e6db74">&#34;🔴 &#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> win <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    player_turn(<span style="color:#e6db74">&#34;🔵 &#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> win <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>c4_board()
+</span></span></code></pre></div>
+      </div></div>
+
+  
+    
+<div class="pagination">
+    <div class="pagination__title">
+        <span class="pagination__title-h">Read other posts</span>
+        <hr />
+    </div>
+    <div class="pagination__buttons">
+        
+        
+        <span class="button next">
+            <a href="http://localhost:1313/posts/tictactoe/">
+                <span class="button__text">Tic Tac Toe</span>
+                <span class="button__icon">→</span>
+            </a>
+        </span>
+        
+    </div>
+</div>
+
+  
+
+  
+</article>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2024 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/mirus-ua/hugo-theme-re-terminal" target="_blank">Theme</a> made by <a href="https://github.com/mirus-ua" target="_blank">Mirus</a></span>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>
