@@ -1,5 +1,5 @@
 theme: hugo-theme-re-terminal
-baseURL: https://gabrielbryer.com/
+baseURL: /
 languageCode: en-us
 title: Gabriel Bryer
 publishDir: docs

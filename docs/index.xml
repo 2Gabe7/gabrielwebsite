@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Gabriel Bryer</title>
-    <link>http://localhost:1313/</link>
+    <link>//localhost:1313/</link>
     <description>Recent content on Gabriel Bryer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 30 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 30 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="//localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>About Me</title>
-      <link>http://localhost:1313/about/</link>
+      <link>//localhost:1313/about/</link>
       <pubDate>Tue, 30 Jul 2024 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/about/</guid>
+      <guid>//localhost:1313/about/</guid>
       <description>Who Am I? Hello World! My name is Gabriel Bryer. Welcome to my Portfolio where you can check all my latest creations and ventures. I am 17 years and currently a senior in high school. I have taken AP Computer Science, and have started Game Design &amp;amp; Development where I will learn C# and the Unity engine.</description>
       <content>&lt;h3 id=&#34;who-am-i&#34;&gt;Who Am I?&lt;/h3&gt;
 &lt;p&gt;Hello World! My name is Gabriel Bryer. Welcome to my Portfolio where you can check all my latest creations and ventures. I am 17 years and currently a senior in high school. I have taken AP Computer Science, and have started Game Design &amp;amp; Development where I will learn C# and the Unity engine.&lt;/p&gt;
@@ -21,10 +21,10 @@
     
     <item>
       <title>Connect 4</title>
-      <link>http://localhost:1313/posts/connect4/</link>
+      <link>//localhost:1313/posts/connect4/</link>
       <pubDate>Fri, 10 Mar 2023 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/connect4/</guid>
+      <guid>//localhost:1313/posts/connect4/</guid>
       <description>When making Connect 4; I used what I learned from Tic Tac Toe to check for the win, although the math was a little confusing because of the way I set the board up at the start, and I was too far in to switch it. (You can see it in the diagnol check wins) It was a fun challenge to figure out how each piece is dropped in, and test outcomes till I was confident it all worked.</description>
       <content>&lt;p&gt;When making Connect 4; I used what I learned from Tic Tac Toe to check for the win, although the math was a little confusing because of the way I set the board up at the start, and I was too far in to switch it. (You can see it in the diagnol check wins) It was a fun challenge to figure out how each piece is dropped in, and test outcomes till I was confident it all worked.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; os
@@ -149,10 +149,10 @@
     
     <item>
       <title>Tic Tac Toe</title>
-      <link>http://localhost:1313/posts/tictactoe/</link>
+      <link>//localhost:1313/posts/tictactoe/</link>
       <pubDate>Wed, 08 Mar 2023 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/tictactoe/</guid>
+      <guid>//localhost:1313/posts/tictactoe/</guid>
       <description>When making this I had just started learning python in school in a class call computer programming. Although it&amp;rsquo;s a little clunky, I think I did pretty good for one of my first attempts at a game.
 import os clear = lambda: os.system(&amp;#39;clear&amp;#39;) clear() # The tic tac toe board board = [&amp;#34; &amp;#34;, &amp;#34; &amp;#34;, &amp;#34; &amp;#34;, &amp;#34; &amp;#34;, &amp;#34; &amp;#34;, &amp;#34; &amp;#34;, &amp;#34; &amp;#34;, &amp;#34; &amp;#34;, &amp;#34; &amp;#34;] # Printing the ttt board def ttt_board(): print(board[0],&amp;#34;|&amp;#34;,board[1],&amp;#34;|&amp;#34;,board[2]) print(&amp;#34;--+---+--&amp;#34;) print(board[3],&amp;#34;|&amp;#34;,board[4],&amp;#34;|&amp;#34;,board[5]) print(&amp;#34;--+---+--&amp;#34;) print(board[6],&amp;#34;|&amp;#34;,board[7],&amp;#34;|&amp;#34;,board[8]) # Check for win function def win(player): for i in range(3): # Check horizontils if board[i] == player and board[i+1] == player and board[i+2] == player: return True # Check Verticals elif board[i] == player and board[i+3] == player and board[i+6] == player: return True # Check diagnals elif board[0] == player and board[4] == player and board[8] == player or board[2] == player and board[4] == player and board[6] == player: return True # Entire Game print(&amp;#34;&amp;#34;) game = 0 for j in range(9): player1 = 0 while player1 == 0: # Player 1 move ttt_board() move = int(input(&amp;#34;Where will X play?</description>
       <content>&lt;p&gt;When making this I had just started learning python in school in a class call computer programming. Although it&amp;rsquo;s a little clunky, I think I did pretty good for one of my first attempts at a game.&lt;/p&gt;
